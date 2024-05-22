@@ -10,7 +10,7 @@ import {
 
 const { auth } = NextAuth(authConfig);
 
-export default auth((req) => {
+export default auth((req): any => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
@@ -24,7 +24,7 @@ export default auth((req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
     return null;
   }
@@ -37,14 +37,13 @@ export default auth((req) => {
 
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
-    return Response.redirect(new URL(
-      `/auth/login?callbackUrl=${encodedCallbackUrl}`,
-      nextUrl
-    ));
+    return Response.redirect(
+      new URL(`/auth/login?callbackUrl=${encodedCallbackUrl}`, nextUrl)
+    );
   }
 
   return null;
-})
+});
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {
